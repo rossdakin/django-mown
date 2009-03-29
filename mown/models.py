@@ -14,12 +14,12 @@ class HasOwner(object):
         raise NotImplementedError, "method not overridden for class " + klass
 
     @classmethod
-    def get_mine(klass, user, key, key_field='pk'):
+    def get_mine(klass, user, *args, **kargs):
         """
         Utility function to check for existance and ownership of an object and
         return it or raise either a 404 or PermissionDenied error.
         """
-        object = get_object_or_404(klass, **{ key_field: key })
+        object = get_object_or_404(klass, *args, **kargs)
         if not object.is_owned_by(user):
             raise PermissionDenied
         return object

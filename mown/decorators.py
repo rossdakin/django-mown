@@ -24,7 +24,8 @@ def assert_my_object_exists(klass, key_param='pk', key_field='pk'):
     def decorator(view_function):
         def wrapper(request, *args, **kwargs):
             key = kwargs[key_param]
-            klass.get_mine(user=request.user, key=key, key_field=key_field)
+            filter = { key_field: key }
+            klass.get_mine(user=request.user, **filter)
             return view_function(request, *args, **kwargs)
         return wrapper
     return decorator
